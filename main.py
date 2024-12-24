@@ -2,12 +2,13 @@ from flask import Flask, request, jsonify
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction
+    MessageEvent, TextMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction,
+    ImageSendMessage
 )
 
 # 設定你的 Channel Secret 和 Access Token
-LINE_CHANNEL_SECRET = 'd86079957d0f6e52a7b062828fa323cf'
-LINE_CHANNEL_ACCESS_TOKEN = 'QpmfjEvMXdnw/kZYGXJU7FwbWidXvlRU6+a0zZVjKv8WVQP6XcpA0J7t22a60yWibLH4FEeHkegUC4uBgGh6Rl2ty73UuEshd2v7Vrt+feN3RNyp6pYxKPHgDv5IRjcL+++teLbqBAjfreeICke6JgdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET = '32c2c2003471e525f684fadf8f2e7966'
+LINE_CHANNEL_ACCESS_TOKEN = '7gY9E2XoQ+4NnI2m7FTKRAH5O7imSfGbwoOrxqP2v9kRWDq6ULI+sVdNA0r3yWdeF9n5R17Y/51Zuhm8oGRW38kEN6pmBu+pgHZrvI4yaEdmQmtkCTW3WGgjX+u4iHd71MtCPfsuHCY/yAOtt37PoQdB04t89/1O/w1cDnyilFU='
 
 app = Flask(__name__)
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
@@ -35,13 +36,13 @@ def handle_message(event):
     user_message = event.message.text.strip()
 
     if user_message == "菜單":
-        # 提示用戶輸入 "我要點餐"
-        reply = "輸入 '我要點餐' 查看餐點選項！"
+        # 回傳圖片訊息
+        image_url = "https://i.imgur.com/Q1Tm4l6.jpeg"  # 直接使用圖片網址
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=reply)
+            ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
         )
-    elif user_message.startswith("我要點餐"):
+    elif user_message.startswith("點餐"):
         # 確定頁數，預設為第一頁
         try:
             page = int(user_message.split()[1]) if len(user_message.split()) > 1 else 1
@@ -85,7 +86,7 @@ def handle_message(event):
         if end_idx < len(menu_options):
             quick_reply_items.append(
                 QuickReplyButton(
-                    action=MessageAction(label="下一頁", text=f"我要點餐 {page + 1}")
+                    action=MessageAction(label="下一頁", text=f"點餐 {page + 1}")
                 )
             )
 
@@ -93,7 +94,7 @@ def handle_message(event):
         if page > 1:
             quick_reply_items.append(
                 QuickReplyButton(
-                    action=MessageAction(label="上一頁", text=f"我要點餐 {page - 1}")
+                    action=MessageAction(label="上一頁", text=f"點餐 {page - 1}")
                 )
             )
 
@@ -105,7 +106,7 @@ def handle_message(event):
             )
         )
     else:
-        reply = "請輸入 '菜單' 或 '我要點餐' 查看選項！"
+        reply = "請輸入 '菜單' 或 '點餐' 查看選項！"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply)
