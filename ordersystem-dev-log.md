@@ -6,19 +6,19 @@
 *   ### 修改專案架構
     * 修改專案結構。
 ## 2024-12-24
-   ### 製作圖文表單的圖片
-   * 製作三個功能表單的按鈕
-   * 放到的line bot的程式碼上傳到機器人
+*   ### 製作圖文表單的圖片
+    * 製作三個功能表單的按鈕
+    * 放到的line bot的程式碼上傳到機器人
 
 ## 2024-12-29
 *   ### 點餐功能遷移
     * 將點餐功能從 main 移至 order_handler。
     * 建立 db 資料夾。
 ## 2024-12-29
-   ### 修改圖文表單的圖片
-   * 修改之前的圖片
-   * 更改按鈕的排版以及尺寸
-   * 嘗試上傳到機器人
+*   ### 修改圖文表單的圖片
+    * 修改之前的圖片
+    * 更改按鈕的排版以及尺寸
+    * 嘗試上傳到機器人
 
 ## 2024-12-30
 *   ### 資料庫系統
@@ -49,7 +49,7 @@
     *  問題：出現 `NameError: name 'order_handler' is not defined` 的錯誤。
     *  解決方案： 在 `main.py` 中，正確導入了 `menu_options`。
     *  問題:圖片上傳不成功，訊息顯示找不到路徑
-    *  解決方案:重改路徑，將此路徑"path/to/your/rich_menu_image.jpg"更改成"C:/Users/10606/Pictures/rich_menu_image.jpg", "rb"
+    *  解決方案:重改路徑，將此路徑`path/to/your/rich_menu_image.jpg"更改成"C:/Users/10606/Pictures/rich_menu_image.jpg`, `rb`
        並且確保程式擁有檔案的讀取權限。 
 *   **2024-12-30**
     *  問題：出現 `ModuleNotFoundError: No module named 'db'` 的錯誤。
