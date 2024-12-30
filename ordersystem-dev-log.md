@@ -45,7 +45,7 @@
 
 
 ## 遇到的問題和解決方案：
- *   **2024-12-29**
+*   **2024-12-29**
     *  問題：出現 `NameError: name 'order_handler' is not defined` 的錯誤。
     *  解決方案： 在 `main.py` 中，正確導入了 `menu_options`。
     *  問題:圖片上傳不成功，訊息顯示找不到路徑
