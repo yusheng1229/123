@@ -1,6 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from linebot.models import (
     TextSendMessage, QuickReply, QuickReplyButton, MessageAction
 )
+from db import utils  # from db import utils 放在這裡   
 
 # 餐點選項 (可獨立放在一個設定檔或資料庫)
 menu_options = [
@@ -83,15 +88,18 @@ def handle_order(event, line_bot_api):
             TextSendMessage(text=reply)
         )
     elif user_message == "確認":
-        # 處理訂單確認
-        if user_id in user_orders and user_orders[user_id]:
-            order_list = "\n".join(user_orders[user_id])
-            total_price = sum(int(menu_item.split()[-2]) for menu_item in user_orders[user_id])
-            reply = f"您的訂單如下:\n{order_list}\n總金額：{total_price} 元\n感謝您的訂購!"
-            del user_orders[user_id]  # 清空購物車
-        else:
-            reply = "您還沒有點餐喔!"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply)
-        )
+        on_order_confirm(event, line_bot_api, user_orders)
+
+def on_order_confirm(event, line_bot_api, user_orders):
+    print("on_order_confirm is called")
+    from db import utils  # 確認有導入 utils
+    user_id = event.source.user_id
+    order_list = "\n".join(user_orders[user_id])
+    total_price = sum(int(menu_item.split()[-2]) for menu_item in user_orders[user_id])
+    utils.save_order(user_id, order_list, total_price)
+    del user_orders[user_id] #清空購物車
+    reply = f"您的訂單如下:\n{order_list}\n總金額：{total_price} 元\n感謝您的訂購!"
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply)
+    )

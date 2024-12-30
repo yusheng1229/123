@@ -5,7 +5,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction,
     ImageSendMessage
 )
-from order_handler import handle_order, menu_options # 導入 handle_order 和 menu_options
+from order_handler import handle_order, menu_options  # 導入 handle_order 和 menu_options
 
 # 設定你的 Channel Secret 和 Access Token
 LINE_CHANNEL_SECRET = '32c2c2003471e525f684fadf8f2e7966'
@@ -43,14 +43,16 @@ def handle_message(event):
             event.reply_token,
             ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
         )
-    elif user_message.startswith("點餐") or any(menu_item.startswith(user_message) for menu_item in menu_options) or user_message == "確認":  # 使用 menu_options 而不是 order_handler.menu_options
-        handle_order(event, line_bot_api)  # 呼叫點餐功能
+    elif (
+        user_message.startswith("點餐")
+        or any(menu_item.startswith(user_message) for menu_item in menu_options)
+        or user_message == "確認"
+    ):
+        # 將點餐相關的訊息轉交給 order_handler
+        handle_order(event, line_bot_api)
     else:
         reply = "請輸入 '菜單' 或 '點餐' 查看選項！"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply)
-        )
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
 if __name__ == "__main__":
     app.run(port=5000)
