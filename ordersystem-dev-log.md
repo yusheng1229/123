@@ -62,8 +62,10 @@
     *  解決方案： 使用 `sys.path.append()` 強制加入搜尋路徑。
     *  問題：PowerShell 無法辨識 `source venv/bin/activate` 指令，無法啟動虛擬環境
     * 解決方案：設定 PowerShell 的執行原則，使用 Windows 版本的虛擬環境啟動指令 `venv\Scripts\activate`。
-    
-      
+
+*  **2024-12-30**
+    * 圖文選單：新增意見回饋按鈕，新增註冊回傳功能(目前將資料回傳終端機)，修改菜單為回傳圖片
+    * 問題：目前無法和line連線      
 
     
       

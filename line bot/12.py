@@ -2,7 +2,7 @@ from linebot import LineBotApi
 from linebot.models import RichMenu, RichMenuArea, RichMenuBounds, URIAction
 
 # 替換為您的 Channel Access Token
-LINE_CHANNEL_ACCESS_TOKEN = 'n5pXYs3fgqex5NYaMCGeO8Ce5UNMQYNYawfyJs1NeqBIuZR9w+gRUPuYZ8G9M2l+VaF8FTar6T8LN0dsNd3a2D7NcGMpVBuE9+4UYILHDw8LboqabOFDaK+KCqpp2PLhLRDE4Flkm6JhjAlwfciXEQdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_ACCESS_TOKEN = 'ACCESS_TOKEN'
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 
 # 建立圖文選單
