@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 360px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button.register {
+            background-color: #4caf50;
+        }
+
+        .button.menu {
+            background-color: #2196f3;
+        }
+
+        .button.pickup {
+            background-color: #a322ff;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">卯咪</div>
+        <div class="buttons">
+            <a href="#register" class="button register">註冊</a>
+            <a href="#menu" class="button menu">菜單</a>
+            <a href="#pickup" class="button pickup">查詢今日訂購</a>
+        </div>
+        
+    
+</body>
+</html>
