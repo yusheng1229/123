@@ -33,7 +33,7 @@ handler = WebhookHandler(line_channel_secret)
 # 如果需要从后台获取数据，请配置 Google API
 GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSePtdHuG2e8dwlzwcBakUnZ9SKRZHV7lbmfZF8urE49lAIXgg/viewform?usp=dialog"
 
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+GOOGLE_API_KEY = os.environ.get("AIzaSyCW8hz35BYMDlxxsp96X5K-4XBjN7XvQtw")
 GOOGLE_API_DISCOVERY_URL = (
     "https://forms.googleapis.com/$discovery/rest?version=v1"
 )
