@@ -10,8 +10,8 @@ import os
 
 
 # 設定你的 Channel Secret 和 Access Token
-LINE_CHANNEL_SECRET = os.getenv("32c2c2003471e525f684fadf8f2e7966")
-LINE_CHANNEL_ACCESS_TOKEN = os.getenv("7gY9E2XoQ+4NnI2m7FTKRAH5O7imSfGbwoOrxqP2v9kRWDq6ULI+sVdNA0r3yWdeF9n5R17Y/51Zuhm8oGRW38kEN6pmBu+pgHZrvI4yaEdmQmtkCTW3WGgjX+u4iHd71MtCPfsuHCY/yAOtt37PoQdB04t89/1O/w1cDnyilFU=")
+LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET")
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN")
 image_url = os.getenv("IMAGE_URL")
 
 app = Flask(__name__)
