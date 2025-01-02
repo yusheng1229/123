@@ -24,8 +24,8 @@ line_channel_secret = os.environ.get("32c2c2003471e525f684fadf8f2e7966")
 
 # 初始化 LineBotApi 和 WebhookHandler
 if line_channel_access_token is None or line_channel_secret is None:
-   print("ERROR! Missing the linebot tokens")
-   exit()
+    print("ERROR! Missing the linebot tokens")
+    exit()
 line_bot_api = LineBotApi(line_channel_access_token)
 handler = WebhookHandler(line_channel_secret)
 
