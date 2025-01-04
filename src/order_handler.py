@@ -1,11 +1,15 @@
 import sys
 import os
+import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from linebot.models import (
     TextSendMessage, QuickReply, QuickReplyButton, MessageAction
 )
 from db import utils  # from db import utils 放在這裡   
+
+
+
 
 # 餐點選項 (可獨立放在一個設定檔或資料庫)
 menu_options = [
@@ -99,7 +103,29 @@ def on_order_confirm(event, line_bot_api, user_orders):
     utils.save_order(user_id, order_list, total_price)
     del user_orders[user_id] #清空購物車
     reply = f"您的訂單如下:\n{order_list}\n總金額：{total_price} 元\n感謝您的訂購!"
+
+    with open("order_list.json", "r", encoding="utf-8") as f:
+        user_order = f.read()
+        user_order = json.loads(user_order)
+        print(user_order)
+    
+    order_keys = list(user_order.keys())
+    print(order_keys)
+    order_id = int(order_keys[-1]) + 1  
+    print(order_id)
+    reply = f"您的訂單如下:\n訂單編號{order_id}\n{order_list}\n總金額：{total_price} 元\n感謝您的訂購!"
+    user_order[order_id] = {
+        "user_id": user_id,
+        "order_list": order_list,
+        "total_amount": total_price
+    }
+    print(user_order)
+    
+    with open("order_list.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(user_order, ensure_ascii=False, indent=2))
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=reply)
     )
+
