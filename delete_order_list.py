@@ -9,6 +9,9 @@ from order_handler import handle_order, menu_options  # 導入 handle_order 和 
 import os
 import json
 
+# Initialize LineBotApi with your channel access token
+line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
+
 def delete_order(user_id):
     # 讀取訂單列表
     with open("order_list.json", "r", encoding="utf-8") as f:
