@@ -105,15 +105,6 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text=f"{text}請選擇要刪除的訂單：", quick_reply=quick_reply)
             )
-            # # 刪除訂單邏輯
-            # from db import utils
-            # utils.delete_order(user_id)
-
-            # # 重新生成 CSV 文件
-            # from db_viewer import generate_csv
-            # generate_csv()
-            # reply = "您的訂單已刪除，感謝使用！"
-            # line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
         except Exception as e:
             reply = f"刪除訂單失敗：{str(e)}"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
