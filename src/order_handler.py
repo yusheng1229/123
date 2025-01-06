@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from linebot.models import (
     TextSendMessage, QuickReply, QuickReplyButton, MessageAction
 )
-from db import utils  # from db import utils 放在這裡   
+from db import utils
 
 
 

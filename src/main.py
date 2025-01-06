@@ -16,10 +16,12 @@ LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET")
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN")
 image_url = os.getenv("IMAGE_URL")
 
+#初始化 Flask 和 Line Bot API：
 app = Flask(__name__)
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
+#定義 /callback 端點：
 @app.route("/callback", methods=['POST'])
 def callback():
     # 獲取 HTTP 請求中的簽名
@@ -36,6 +38,7 @@ def callback():
         return jsonify({"message": "Invalid signature"}), 400
 
     return 'OK'
+#定義 /delete_order 端點：
 @app.route("/delete_order", methods=['POST'])
 def delete_order():
     try:
@@ -55,6 +58,7 @@ def delete_order():
     except Exception as e:
         return jsonify({"message": str(e)}), 500
     
+#處理 Line Bot 訊息：
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     user_message = event.message.text.strip()
