@@ -50,9 +50,9 @@ def delete_order():
         from db import utils
         utils.delete_order(user_id)
 
-        # 重新生成 CSV 文件
-        from db_viewer import generate_csv
-        generate_csv()
+        # # 重新生成 CSV 文件
+        # from db_viewer import generate_csv
+        # generate_csv()
 
         return jsonify({"message": "Order deleted successfully."}), 200
     except Exception as e:
