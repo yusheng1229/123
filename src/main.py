@@ -5,11 +5,12 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction,
     ImageSendMessage
 )
-from order_handler import handle_order, menu_options  # 導入 handle_order 和 menu_options
+from order_handler import handle_order, menu_options
 import os
 import json
 import re
-
+#Import database handler
+from db import utils
 
 # 設定你的 Channel Secret 和 Access Token
 LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET")
@@ -47,12 +48,7 @@ def delete_order():
             return jsonify({"message": "User ID is required."}), 400
 
         # 刪除訂單
-        from db import utils
         utils.delete_order(user_id)
-
-        # # 重新生成 CSV 文件
-        # from db_viewer import generate_csv
-        # generate_csv()
 
         return jsonify({"message": "Order deleted successfully."}), 200
     except Exception as e:
@@ -62,6 +58,7 @@ def delete_order():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     user_message = event.message.text.strip()
+    user_id = event.source.user_id
 
     if user_message == "菜單":
         # 回傳圖片訊息  # 直接使用圖片網址
@@ -78,7 +75,6 @@ def handle_message(event):
         handle_order(event, line_bot_api)
     elif user_message == "取消訂餐":
         try:
-            user_id = event.source.user_id
             # 讀取訂單列表
             with open("order_list.json", "r", encoding="utf-8") as f:
                 user_orders = json.load(f)
@@ -125,6 +121,42 @@ def handle_message(event):
     elif user_message == "取消":
         reply = "取消刪除訂單！"
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+    elif user_message == "註冊":
+        # First, let's check if the user already exists in the database:
+        user_data = utils.get_user(user_id)
+        if user_data:
+            reply = f"您已註冊！ 您是{user_data['name']}!"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+        else:
+            # If not registered, start the registration process
+            reply = "請輸入您的姓名"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+            # We will store the user_id in a temp dictionary for the next message
+            app.user_registration_data = {'user_id': user_id, 'stage': 'name'}
+
+    # Handle registration flow, using temp data
+    elif hasattr(app, 'user_registration_data') and app.user_registration_data.get('user_id') == user_id:
+        if app.user_registration_data.get('stage') == 'name':
+            name = user_message
+            app.user_registration_data['name'] = name
+            app.user_registration_data['stage'] = 'email'
+            reply = "請輸入您的電子郵件"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+        elif app.user_registration_data.get('stage') == 'email':
+           email = user_message
+           app.user_registration_data['email'] = email
+           app.user_registration_data['stage'] = 'phone'
+           reply = "請輸入您的電話號碼"
+           line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+        elif app.user_registration_data.get('stage') == 'phone':
+            phone = user_message
+            app.user_registration_data['phone'] = phone
+            # Complete registration, store in database
+            utils.create_user(app.user_registration_data)
+
+            reply = "註冊成功！"
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+            del app.user_registration_data # Clear temp data
 
 if __name__ == "__main__":
     app.run(port=5000)
