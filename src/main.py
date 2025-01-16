@@ -50,9 +50,9 @@ def delete_order():
         from db import utils
         utils.delete_order(user_id)
 
-        # 重新生成 CSV 文件
-        from db_viewer import generate_csv
-        generate_csv()
+        # # 重新生成 CSV 文件
+        # from db_viewer import generate_csv
+        # generate_csv()
 
         return jsonify({"message": "Order deleted successfully."}), 200
     except Exception as e:
@@ -124,9 +124,6 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
     elif user_message == "取消":
         reply = "取消刪除訂單！"
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
-    else:
-        reply = "請輸入 '菜單' 或 '點餐' 查看選項！"
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
 if __name__ == "__main__":
